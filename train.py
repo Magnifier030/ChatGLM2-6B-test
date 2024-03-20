@@ -15,31 +15,12 @@ model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).c
 # 添加微调步骤
 # 假设你有一个对话的文本数据集，命名为conversations
 conversations = pd.read_json('./train_data.json')['data'].tolist()
-max_seq_length = 128
-
-def tokenize_function(examples):
-    return tokenizer(examples["text"])
-
-tokenized_datasets = conversations.map(tokenize_function, batched=True, num_proc=4, remove_columns=conversations["train"].column_names)
-
-def group_texts(examples):
-    concatenated_examples = {k: sum(examples[k], []) for k in examples.keys()}
-    total_length = len(concatenated_examples[list(examples.keys())[0]])
-    total_length = (total_length // max_seq_length) * max_seq_length
-    result = {
-        k: [t[i : i + max_seq_length] for i in range(0, total_length, max_seq_length)]
-        for k, t in concatenated_examples.items()
-    }
-    result["labels"] = result["input_ids"].copy()
-    return result
-
-tokenized_datasets = tokenized_datasets.map(group_texts, batched=True, num_proc=4)
+num_epochs = 1
 
 
 
 # 设置批量大小
-batch_size = 8
-num_epochs = 1
+batch_size = 2
 
 # 准备数据
 inputs = tokenizer(conversations["data"].apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)

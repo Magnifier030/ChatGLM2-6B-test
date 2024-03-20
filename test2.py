@@ -1,5 +1,3 @@
-import torch
-
-print(torch.cuda.device_count())
-
-print(torch.cuda.is_available())
+import pandas as pd
+conversations = pd.read_json('./train_data.json') 
+print(conversations['data'].tolist()[0])
