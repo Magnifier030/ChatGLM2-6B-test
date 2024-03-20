@@ -1,6 +1,9 @@
 from transformers import AutoModel, AutoTokenizer
 import torch
 import pandas as pd
+import os
+
+os.environ["CUDA_VISIBLE_DEVICES"] = '6'
 
 # 加载预训练模型和tokenizer
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True)
