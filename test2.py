@@ -1,3 +1,3 @@
-import pandas as pd
-conversations = pd.read_json('./train_data.json') 
-print(type(conversations))
+import torch
+
+print(torch.cuda.device_count())
