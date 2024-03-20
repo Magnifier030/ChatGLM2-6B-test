@@ -20,6 +20,4 @@ def transform_dataformat(before_file, after_file):
    with open(after_file, 'w+', encoding='utf-8') as f:
        json.dump(data, f, indent=4)
 
-transform_dataformat('./DRCD_training.json', './change/train_data.json')
-# transform_dataformat('./DRCD_dev.json', './change/dev_data.json')
-# transform_dataformat('./DRCD_test.json', './change/test_data.json')
+transform_dataformat('./DRCD/DRCD_training.json', './change/train_data.json')
