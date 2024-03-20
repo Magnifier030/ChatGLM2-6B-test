@@ -11,7 +11,7 @@ model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).f
 
 # 添加微调步骤
 # 假设你有一个对话的文本数据集，命名为conversations
-conversations = pd.read_json('./change/train_data.json') 
+conversations = pd.read_json('./train_data.json') 
 num_epochs = 1
 
 # 准备数据
