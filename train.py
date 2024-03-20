@@ -7,7 +7,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '6'
 
 # 加载预训练模型和tokenizer
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True)
-model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).cuda()
+model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).float()
 
 # 添加微调步骤
 # 假设你有一个对话的文本数据集，命名为conversations
