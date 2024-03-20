@@ -14,7 +14,7 @@ model = AutoModel.from_pretrained("THUDM/chatglm2-6b", trust_remote_code=True).c
 
 # 添加微调步骤
 # 假设你有一个对话的文本数据集，命名为conversations
-conversations = pd.read_json('./train_data.json')['data'].tolist()
+conversations = pd.read_json('./train_data.json')
 num_epochs = 1
 
 
@@ -23,7 +23,7 @@ num_epochs = 1
 batch_size = 2
 
 # 准备数据
-inputs = tokenizer(conversations.apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)
+inputs = tokenizer(conversations['data'].apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)
 inputs = {k: v.to(model.device) for k, v in inputs.items()}
 
 # 定义损失函数和优化器
