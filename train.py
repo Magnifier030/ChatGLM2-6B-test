@@ -4,6 +4,8 @@ from torch.utils.data import DataLoader
 import pandas as pd
 import os
 
+torch.cuda.empty_cache()
+
 os.environ["CUDA_VISIBLE_DEVICES"] = '6'
 
 # 加载预训练模型和tokenizer
