@@ -15,7 +15,7 @@ conversations = pd.read_json('./train_data.json')
 num_epochs = 1
 
 # 准备数据
-inputs = tokenizer(conversations, return_tensors="pt", padding=True, truncation=True)
+inputs = tokenizer(conversations["data"].apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)
 inputs = {k: v.to(model.device) for k, v in inputs.items()}
 
 # 定义损失函数和优化器
