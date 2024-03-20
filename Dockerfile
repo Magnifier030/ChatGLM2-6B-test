@@ -1,5 +1,7 @@
 FROM python:3.9
 
+ENV CUDA_VISIBLE_DEVICES=6
+
 # 将工作目录设置为 /app
 WORKDIR /app
 
