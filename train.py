@@ -20,7 +20,7 @@ num_epochs = 1
 
 
 # 设置批量大小
-batch_size = 2
+batch_size = 1
 
 # 准备数据
 inputs = tokenizer(conversations['data'].apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)
