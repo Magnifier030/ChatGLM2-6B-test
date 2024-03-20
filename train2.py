@@ -8,19 +8,23 @@ from transformers import AutoModel, AutoTokenizer
 import pandas as pd
 import os
 
-# 初始化分布式训练环境
-def init_distributed():
-    # 初始化分布式训练
+def init_distributed(rank, world_size):
     torch.cuda.set_device(rank)
-    dist.init_process_group(backend='nccl', init_method='env://')
+    dist.init_process_group(backend='nccl', init_method='env://', world_size=world_size, rank=rank)
     torch.manual_seed(0)
 
-# 加载预训练模型和tokenizer
+# 获取当前进程的 rank 和 world_size
+rank = int(os.environ['RANK'])
+world_size = int(os.environ['WORLD_SIZE'])
+
+# 初始化分布式训练环境
+init_distributed(rank, world_size)
+
+# 加载预训练模型和 tokenizer
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 model = AutoModel.from_pretrained("bert-base-uncased").cuda()
 
-# 将模型包装成分布式数据并行模型
-init_distributed()
+# 包装模型成为分布式数据并行模型
 model = DDP(model)
 
 # 准备数据
@@ -28,7 +32,7 @@ conversations = pd.read_json('./train_data.json')
 batch_size = 2
 
 # 使用分布式采样器
-train_sampler = DistributedSampler(conversations, num_replicas=torch.distributed.get_world_size(), rank=torch.distributed.get_rank())
+train_sampler = DistributedSampler(conversations, num_replicas=world_size, rank=rank)
 train_loader = DataLoader(conversations, batch_size=batch_size, sampler=train_sampler)
 
 # 定义损失函数和优化器
