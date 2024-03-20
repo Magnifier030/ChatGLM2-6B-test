@@ -18,7 +18,7 @@ conversations = pd.read_json('./train_data.json')
 num_epochs = 1
 
 # 设置批量大小
-batch_size = 16
+batch_size = 8
 
 # 准备数据
 inputs = tokenizer(conversations["data"].apply(lambda x: x["text"]).tolist(), return_tensors="pt", padding=True, truncation=True)
