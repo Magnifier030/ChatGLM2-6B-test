@@ -1,12 +1,11 @@
 from transformers import AutoModel, AutoTokenizer
 import gradio as gr
 import mdtex2html
-from utils import load_model_on_gpus
 
 tokenizer = AutoTokenizer.from_pretrained("THUDM/chatglm2-6b-int4", trust_remote_code=True)
 model = AutoModel.from_pretrained("THUDM/chatglm2-6b-int4",trust_remote_code=True).cuda()
 model = model.eval()
-# """Override Chatbot.postprocess"""
+
 
 
 def postprocess(self, y):
